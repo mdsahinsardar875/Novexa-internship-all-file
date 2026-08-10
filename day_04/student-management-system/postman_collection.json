@@ -1,0 +1,61 @@
+{
+  "info": {
+    "name": "Student Management System API",
+    "description": "CRUD API collection for Task 5: Database Integration with MongoDB and Express.js",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api/students" },
+    { "key": "studentId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Create Student",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Ayesha Khan\",\n  \"email\": \"ayesha.khan@example.com\",\n  \"age\": 21,\n  \"gender\": \"Female\",\n  \"course\": \"Computer Science\",\n  \"semester\": 4\n}"
+        },
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] }
+      }
+    },
+    {
+      "name": "Get All Students",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}?page=1&limit=10", "host": ["{{baseUrl}}"], "query": [
+          { "key": "page", "value": "1" },
+          { "key": "limit", "value": "10" }
+        ] }
+      }
+    },
+    {
+      "name": "Get Student By ID",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/{{studentId}}", "host": ["{{baseUrl}}"], "path": ["{{studentId}}"] }
+      }
+    },
+    {
+      "name": "Update Student",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"semester\": 5,\n  \"isActive\": true\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/{{studentId}}", "host": ["{{baseUrl}}"], "path": ["{{studentId}}"] }
+      }
+    },
+    {
+      "name": "Delete Student",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "{{baseUrl}}/{{studentId}}", "host": ["{{baseUrl}}"], "path": ["{{studentId}}"] }
+      }
+    }
+  ]
+}
