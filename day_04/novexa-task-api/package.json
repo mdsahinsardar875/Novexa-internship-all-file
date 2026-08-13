@@ -1,0 +1,20 @@
+{
+  "name": "novexa-task-api",
+  "version": "1.0.0",
+  "description": "A RESTful Task Management API built with Node.js and Express.js for Novexa Technologies - Full Stack Development Task 4",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": ["rest-api", "nodejs", "express", "crud", "task-manager"],
+  "author": "Novexa Technologies Intern",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
