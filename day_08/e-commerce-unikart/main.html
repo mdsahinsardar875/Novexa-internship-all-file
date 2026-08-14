@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIKART - Discover the Unique in You</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>UNIKART</h2>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <a href="#" class="nav-link" data-page="home">Home</a>
+                <a href="#" class="nav-link" data-page="shop">Shop</a>
+                <a href="#" class="nav-link" data-page="categories">Categories</a>
+                <div class="nav-actions">
+                    <button class="theme-toggle" id="theme-toggle">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                    <button class="cart-btn" id="cart-btn">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </button>
+                    <button class="auth-btn" id="auth-btn">Login</button>
+                </div>
+            </div>
+            
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <section id="home-page" class="page active">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Discover the Unique in You</h1>
+                    <p class="hero-subtitle">Your destination for unique, trendy, and high-quality products that express your individual style.</p>
+                    <button class="btn btn--primary btn--lg hero-cta" data-page="shop">Shop Now</button>
+                </div>
+            </div>
+
+            <!-- Featured Products -->
+            <section class="featured-products">
+                <div class="container">
+                    <h2 class="section-title">Featured Products</h2>
+                    <div class="products-grid" id="featured-products-grid">
+                        <!-- Featured products will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section class="categories-section">
+                <div class="container">
+                    <h2 class="section-title">Shop by Category</h2>
+                    <div class="categories-grid" id="categories-grid">
+                        <!-- Categories will be populated here -->
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Shop Page -->
+        <section id="shop-page" class="page">
+            <div class="container">
+                <div class="shop-header">
+                    <h1>All Products</h1>
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="Search products..." class="form-control">
+                        <div class="search-suggestions" id="search-suggestions"></div>
+                    </div>
+                </div>
+
+                <div class="shop-content">
+                    <aside class="filters-sidebar">
+                        <div class="filter-group">
+                            <h3>Categories</h3>
+                            <div id="category-filters"></div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h3>Price Range</h3>
+                            <div class="price-range">
+                                <input type="range" id="price-min" min="0" max="300" value="0" class="price-slider">
+                                <input type="range" id="price-max" min="0" max="300" value="300" class="price-slider">
+                                <div class="price-values">
+                                    <span>$<span id="price-min-val">0</span></span>
+                                    <span>$<span id="price-max-val">300</span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h3>Rating</h3>
+                            <div id="rating-filters"></div>
+                        </div>
+
+                        <button class="btn btn--secondary btn--full-width" id="clear-filters">Clear Filters</button>
+                    </aside>
+
+                    <div class="products-section">
+                        <div class="products-header">
+                            <div class="results-count" id="results-count"></div>
+                            <select id="sort-select" class="form-control sort-select">
+                                <option value="name">Sort by Name</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="rating">Rating</option>
+                            </select>
+                        </div>
+                        <div class="products-grid" id="products-grid">
+                            <!-- Products will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Detail Page -->
+        <section id="product-detail-page" class="page">
+            <div class="container">
+                <button class="btn btn--outline back-btn" id="back-btn">← Back</button>
+                <div class="product-detail" id="product-detail">
+                    <!-- Product detail will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Page -->
+        <section id="cart-page" class="page">
+            <div class="container">
+                <h1>Shopping Cart</h1>
+                <div class="cart-content">
+                    <div class="cart-items" id="cart-items">
+                        <!-- Cart items will be populated here -->
+                    </div>
+                    <div class="cart-summary">
+                        <div class="cart-total">
+                            <h3>Order Summary</h3>
+                            <div class="total-line">
+                                <span>Subtotal:</span>
+                                <span id="cart-subtotal">$0.00</span>
+                            </div>
+                            <div class="total-line">
+                                <span>Shipping:</span>
+                                <span>Free</span>
+                            </div>
+                            <div class="total-line total">
+                                <span>Total:</span>
+                                <span id="cart-total">$0.00</span>
+                            </div>
+                            <button class="btn btn--primary btn--full-width checkout-btn">Proceed to Checkout</button>
+                            <button class="btn btn--outline btn--full-width" data-page="shop">Continue Shopping</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Authentication Modal -->
+    <div class="modal hidden" id="auth-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="auth-modal-title">Login</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="auth-form">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="auth-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="auth-password" class="form-control" required>
+                    </div>
+                    <div class="form-group register-only hidden">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" id="auth-confirm-password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width" id="auth-submit">Login</button>
+                </form>
+                <div class="auth-switch">
+                    <p>Don't have an account? <a href="#" id="switch-to-register">Sign up</a></p>
+                    <p class="register-only hidden">Already have an account? <a href="#" id="switch-to-login">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>UNIKART</h3>
+                    <p>Discover the unique in you with our curated collection of trendy and high-quality products.</p>
+                    <div class="social-links">
+                        <a href="#" target="_blank">📘</a>
+                        <a href="#" target="_blank">📷</a>
+                        <a href="#" target="_blank">🐦</a>
+                        <a href="#" target="_blank">📌</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#" data-page="home">Home</a></li>
+                        <li><a href="#" data-page="shop">Shop</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>📧 hello@unikart.com</p>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📍 123 Style Street, Fashion District, NY 10001</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 UNIKART. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./app.js"></script>
+</body>
+</html>
