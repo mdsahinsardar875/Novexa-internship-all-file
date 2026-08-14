@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Novexa Task Manager API — Live Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#121319;
+    --panel:#1a1c25;
+    --panel-2:#20222d;
+    --line:rgba(255,255,255,0.08);
+    --text:#eef0f6;
+    --muted:#9297ab;
+    --violet:#8B6CD9;
+    --amber:#FFC857;
+    --green:#2FE0A3;
+    --teal:#3FCBD8;
+    --red:#FF6B6B;
+    --get:#3FCBD8;
+    --post:#2FE0A3;
+    --put:#FFC857;
+    --delete:#FF6B6B;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(139,108,217,0.18), transparent 60%),
+      radial-gradient(900px 500px at 10% 0%, rgba(63,203,216,0.12), transparent 55%),
+      var(--ink);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding:40px 20px 80px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;}
+
+  /* ---------- HERO ---------- */
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(47,224,163,0.15);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(32px,5vw,52px);
+    font-weight:700;
+    line-height:1.05;
+    margin:0 0 14px;
+    letter-spacing:-0.01em;
+  }
+  h1 span{
+    background:linear-gradient(90deg,var(--violet),var(--teal));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .sub{
+    color:var(--muted);
+    font-size:16px;
+    max-width:640px;
+    line-height:1.6;
+    margin-bottom:28px;
+  }
+  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:44px;}
+  .badge{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    padding:7px 12px;
+    border-radius:100px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    color:var(--muted);
+  }
+  .badge b{color:var(--text);font-weight:600;}
+
+  /* ---------- SECTION LABEL ---------- */
+  .section-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .section-label::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  /* ---------- CONSOLE ---------- */
+  .console{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    margin-bottom:56px;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.5);
+  }
+  .console-top{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:14px 18px;
+    border-bottom:1px solid var(--line);
+    background:var(--panel-2);
+  }
+  .console-top .cdot{width:10px;height:10px;border-radius:50%;}
+  .console-top span:last-child{
+    margin-left:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .console-body{padding:20px;}
+  .req-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+  select, .endpoint-input{
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;
+    background:var(--panel-2);
+    color:var(--text);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:11px 14px;
+  }
+  select{cursor:pointer;font-weight:700;}
+  .endpoint-input{flex:1;min-width:200px;}
+  #methodSelect option{background:var(--panel-2);}
+  .send-btn{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    background:linear-gradient(90deg,var(--violet),var(--teal));
+    color:#0d0e13;
+    border:none;
+    border-radius:10px;
+    padding:11px 22px;
+    cursor:pointer;
+    transition:transform .15s ease, opacity .15s ease;
+  }
+  .send-btn:hover{transform:translateY(-1px);opacity:0.92;}
+  .send-btn:active{transform:translateY(0);}
+  #bodyWrap{margin-bottom:14px;display:none;}
+  #bodyWrap label{
+    display:block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:6px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+  textarea{
+    width:100%;
+    min-height:100px;
+    background:var(--panel-2);
+    color:var(--text);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    resize:vertical;
+  }
+  .response{
+    background:#0e0f15;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 18px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    line-height:1.65;
+    white-space:pre-wrap;
+    word-break:break-word;
+    max-height:280px;
+    overflow:auto;
+  }
+  .status-pill{
+    display:inline-block;
+    font-weight:700;
+    padding:2px 10px;
+    border-radius:100px;
+    font-size:12px;
+    margin-bottom:10px;
+  }
+  .s-200{background:rgba(47,224,163,0.18);color:var(--green);}
+  .s-201{background:rgba(63,203,216,0.18);color:var(--teal);}
+  .s-400{background:rgba(255,200,87,0.18);color:var(--amber);}
+  .s-404{background:rgba(255,107,107,0.18);color:var(--red);}
+
+  .method-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:12px;
+    padding:3px 9px;
+    border-radius:6px;
+  }
+  .m-GET{background:rgba(63,203,216,0.16);color:var(--get);}
+  .m-POST{background:rgba(47,224,163,0.16);color:var(--post);}
+  .m-PUT{background:rgba(255,200,87,0.16);color:var(--put);}
+  .m-DELETE{background:rgba(255,107,107,0.16);color:var(--delete);}
+
+  /* ---------- BOARD ---------- */
+  .board{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-bottom:56px;
+  }
+  @media(max-width:720px){.board{grid-template-columns:1fr;}}
+  .col{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px;
+    min-height:140px;
+  }
+  .col-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:14px;
+  }
+  .col-count{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--muted);
+    background:var(--panel-2);
+    padding:2px 8px;
+    border-radius:100px;
+  }
+  .todo-dot{color:var(--violet);}
+  .prog-dot{color:var(--amber);}
+  .done-dot{color:var(--green);}
+  .card{
+    background:var(--panel-2);
+    border-radius:10px;
+    padding:12px 13px;
+    margin-bottom:10px;
+    border-left:3px solid transparent;
+    animation:slideIn .25s ease;
+    transition:transform .15s ease;
+  }
+  .card:hover{transform:translateX(2px);}
+  @keyframes slideIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+  .card-title{font-size:13.5px;font-weight:600;margin-bottom:4px;}
+  .card-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px;}
+  .card-foot{display:flex;justify-content:space-between;align-items:center;}
+  .prio{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    padding:2px 7px;
+    border-radius:100px;
+  }
+  .p-low{background:rgba(63,203,216,0.14);color:var(--teal);}
+  .p-medium{background:rgba(255,200,87,0.14);color:var(--amber);}
+  .p-high{background:rgba(255,107,107,0.14);color:var(--red);}
+  .card-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+
+  /* ---------- ENDPOINT TABLE ---------- */
+  .endpoints{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:40px;
+  }
+  .ep-row{
+    display:grid;
+    grid-template-columns:90px 1fr 2fr;
+    gap:12px;
+    padding:14px 18px;
+    border-bottom:1px solid var(--line);
+    align-items:center;
+    font-size:13.5px;
+  }
+  .ep-row:last-child{border-bottom:none;}
+  .ep-path{font-family:'JetBrains Mono',monospace;color:var(--text);}
+  .ep-desc{color:var(--muted);}
+
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:12.5px;
+    font-family:'JetBrains Mono',monospace;
+    line-height:1.8;
+    padding-top:10px;
+    border-top:1px solid var(--line);
+  }
+  footer b{color:var(--text);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow"><span class="dot"></span> LIVE SIMULATION · IN-BROWSER · NO SERVER NEEDED</div>
+  <h1>Novexa <span>Task Manager</span><br/>REST API</h1>
+  <p class="sub">This preview runs the exact same CRUD logic as <code style="font-family:'JetBrains Mono',monospace;color:#cfd3e6;">server.js</code> — just simulated client-side in JavaScript, so you can see request → response → board update instantly, without starting Node.</p>
+
+  <div class="badges">
+    <div class="badge">Method: <b>GET · POST · PUT · DELETE</b></div>
+    <div class="badge">Base URL (real server): <b>localhost:5000/api/tasks</b></div>
+    <div class="badge">Data store: <b>in-memory array</b></div>
+  </div>
+
+  <p class="section-label">Try the API</p>
+  <div class="console">
+    <div class="console-top">
+      <div class="cdot" style="background:var(--red)"></div>
+      <div class="cdot" style="background:var(--amber)"></div>
+      <div class="cdot" style="background:var(--green)"></div>
+      <span>request-console.js</span>
+    </div>
+    <div class="console-body">
+      <div class="req-row">
+        <select id="methodSelect">
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="DELETE">DELETE</option>
+        </select>
+        <input class="endpoint-input" id="endpointInput" value="/api/tasks" />
+        <button class="send-btn" id="sendBtn">Send ▸</button>
+      </div>
+      <div id="bodyWrap">
+        <label>Request Body (JSON)</label>
+        <textarea id="bodyInput">{
+  "title": "Write unit tests",
+  "description": "Cover the controller functions",
+  "status": "todo",
+  "priority": "high"
+}</textarea>
+      </div>
+      <div class="response" id="responseBox">// click "Send" to make your first request →</div>
+    </div>
+  </div>
+
+  <p class="section-label">Live Task Board</p>
+  <div class="board">
+    <div class="col">
+      <div class="col-head"><span><span class="todo-dot">●</span> To Do</span><span class="col-count" id="countTodo">0</span></div>
+      <div id="colTodo"></div>
+    </div>
+    <div class="col">
+      <div class="col-head"><span><span class="prog-dot">●</span> In Progress</span><span class="col-count" id="countProg">0</span></div>
+      <div id="colProg"></div>
+    </div>
+    <div class="col">
+      <div class="col-head"><span><span class="done-dot">●</span> Done</span><span class="col-count" id="countDone">0</span></div>
+      <div id="colDone"></div>
+    </div>
+  </div>
+
+  <p class="section-label">Endpoint Reference</p>
+  <div class="endpoints">
+    <div class="ep-row"><span class="method-tag m-GET">GET</span><span class="ep-path">/api/tasks</span><span class="ep-desc">Get all tasks — supports ?status= and ?priority= filters</span></div>
+    <div class="ep-row"><span class="method-tag m-GET">GET</span><span class="ep-path">/api/tasks/:id</span><span class="ep-desc">Get a single task by id</span></div>
+    <div class="ep-row"><span class="method-tag m-POST">POST</span><span class="ep-path">/api/tasks</span><span class="ep-desc">Create a new task from a JSON body</span></div>
+    <div class="ep-row"><span class="method-tag m-PUT">PUT</span><span class="ep-path">/api/tasks/:id</span><span class="ep-desc">Update an existing task</span></div>
+    <div class="ep-row"><span class="method-tag m-DELETE">DELETE</span><span class="ep-path">/api/tasks/:id</span><span class="ep-desc">Delete a task</span></div>
+  </div>
+
+  <footer>
+    Try: <b>GET /api/tasks/2</b> → single task &nbsp;|&nbsp; <b>POST /api/tasks</b> with a body → adds a card &nbsp;|&nbsp; <b>PUT /api/tasks/1</b> body <b>{"status":"done"}</b> → moves the card &nbsp;|&nbsp; <b>DELETE /api/tasks/1</b> → removes it
+  </footer>
+</div>
+
+<script>
+// ---- Mirrors data/tasks.js + controllers/taskController.js ----
+let tasks = [
+  {id:1,title:"Design database schema",description:"Plan out the tables/collections needed for the task manager.",status:"done",priority:"high",color:"#FF6B6B",createdAt:"2026-08-01T09:00:00Z"},
+  {id:2,title:"Build Express server",description:"Set up server.js with middleware and route mounting.",status:"in-progress",priority:"high",color:"#4ECDC4",createdAt:"2026-08-02T10:30:00Z"},
+  {id:3,title:"Write Postman collection",description:"Document every endpoint with example requests.",status:"in-progress",priority:"medium",color:"#FFD166",createdAt:"2026-08-03T14:15:00Z"},
+  {id:4,title:"Add input validation",description:"Validate request bodies before writing to the dataset.",status:"todo",priority:"medium",color:"#6A4C93",createdAt:"2026-08-04T08:45:00Z"},
+  {id:5,title:"Deploy to GitHub",description:"Push source code, README and screenshots to a repo.",status:"todo",priority:"low",color:"#1B9AAA",createdAt:"2026-08-05T16:20:00Z"}
+];
+let nextId = 6;
+const VALID_STATUS = ["todo","in-progress","done"];
+const VALID_PRIORITY = ["low","medium","high"];
+
+function findTask(id){ return tasks.find(t => t.id === id); }
+
+function handleRequest(method, path, bodyRaw){
+  const parts = path.replace(/^\/api\/tasks\/?/, "").split("?");
+  const idPart = parts[0];
+  const query = new URLSearchParams(parts[1] || "");
+  const id = idPart ? Number(idPart) : null;
+
+  if(method === "GET" && !id){
+    let results = [...tasks];
+    const status = query.get("status");
+    const priority = query.get("priority");
+    if(status) results = results.filter(t => t.status === status);
+    if(priority) results = results.filter(t => t.priority === priority);
+    return {code:200, body:{success:true, count:results.length, data:results}};
+  }
+  if(method === "GET" && id){
+    const t = findTask(id);
+    if(!t) return {code:404, body:{success:false, message:`Task with id ${id} not found`}};
+    return {code:200, body:{success:true, data:t}};
+  }
+  if(method === "POST"){
+    let parsed;
+    try{ parsed = JSON.parse(bodyRaw || "{}"); }catch(e){
+      return {code:400, body:{success:false, message:"Invalid JSON body"}};
+    }
+    const {title, description="", status="todo", priority="medium"} = parsed;
+    if(!title || typeof title !== "string"){
+      return {code:400, body:{success:false, message:"Field 'title' is required and must be a string"}};
+    }
+    if(status && !VALID_STATUS.includes(status)){
+      return {code:400, body:{success:false, message:`'status' must be one of: ${VALID_STATUS.join(", ")}`}};
+    }
+    if(priority && !VALID_PRIORITY.includes(priority)){
+      return {code:400, body:{success:false, message:`'priority' must be one of: ${VALID_PRIORITY.join(", ")}`}};
+    }
+    const palette = ["#FF6B6B","#4ECDC4","#FFD166","#6A4C93","#1B9AAA","#F72585"];
+    const color = palette[Math.floor(Math.random()*palette.length)];
+    const newTask = {id: nextId++, title, description, status, priority, color, createdAt: new Date().toISOString()};
+    tasks.push(newTask);
+    return {code:201, body:{success:true, data:newTask}};
+  }
+  if(method === "PUT"){
+    if(!id) return {code:400, body:{success:false, message:"An id is required in the URL, e.g. /api/tasks/1"}};
+    const existing = findTask(id);
+    if(!existing) return {code:404, body:{success:false, message:`Task with id ${id} not found`}};
+    let parsed;
+    try{ parsed = JSON.parse(bodyRaw || "{}"); }catch(e){
+      return {code:400, body:{success:false, message:"Invalid JSON body"}};
+    }
+    if(parsed.status && !VALID_STATUS.includes(parsed.status)){
+      return {code:400, body:{success:false, message:`'status' must be one of: ${VALID_STATUS.join(", ")}`}};
+    }
+    if(parsed.priority && !VALID_PRIORITY.includes(parsed.priority)){
+      return {code:400, body:{success:false, message:`'priority' must be one of: ${VALID_PRIORITY.join(", ")}`}};
+    }
+    Object.assign(existing, parsed, {id});
+    return {code:200, body:{success:true, data:existing}};
+  }
+  if(method === "DELETE"){
+    if(!id) return {code:400, body:{success:false, message:"An id is required in the URL, e.g. /api/tasks/1"}};
+    const idx = tasks.findIndex(t => t.id === id);
+    if(idx === -1) return {code:404, body:{success:false, message:`Task with id ${id} not found`}};
+    tasks.splice(idx,1);
+    return {code:200, body:{success:true, message:`Task ${id} deleted successfully`}};
+  }
+  return {code:404, body:{success:false, message:"Route not found"}};
+}
+
+function renderBoard(){
+  const cols = {todo: document.getElementById("colTodo"), "in-progress": document.getElementById("colProg"), done: document.getElementById("colDone")};
+  Object.values(cols).forEach(c => c.innerHTML = "");
+  const counts = {todo:0, "in-progress":0, done:0};
+  tasks.forEach(t => {
+    counts[t.status]++;
+    const card = document.createElement("div");
+    card.className = "card";
+    card.style.borderLeftColor = t.color;
+    card.innerHTML = `
+      <div class="card-title">${escapeHtml(t.title)}</div>
+      <div class="card-desc">${escapeHtml(t.description || "")}</div>
+      <div class="card-foot">
+        <span class="prio p-${t.priority}">${t.priority}</span>
+        <span class="card-id">#${t.id}</span>
+      </div>`;
+    cols[t.status].appendChild(card);
+  });
+  document.getElementById("countTodo").textContent = counts.todo;
+  document.getElementById("countProg").textContent = counts["in-progress"];
+  document.getElementById("countDone").textContent = counts.done;
+}
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+}
+
+const methodSelect = document.getElementById("methodSelect");
+const bodyWrap = document.getElementById("bodyWrap");
+methodSelect.addEventListener("change", () => {
+  bodyWrap.style.display = (methodSelect.value === "POST" || methodSelect.value === "PUT") ? "block" : "none";
+});
+
+document.getElementById("sendBtn").addEventListener("click", () => {
+  const method = methodSelect.value;
+  const path = document.getElementById("endpointInput").value.trim();
+  const bodyRaw = document.getElementById("bodyInput").value;
+  const result = handleRequest(method, path, bodyRaw);
+  const box = document.getElementById("responseBox");
+  const pillClass = result.code === 200 ? "s-200" : result.code === 201 ? "s-201" : result.code === 404 ? "s-404" : "s-400";
+  box.innerHTML = `<span class="status-pill ${pillClass}">${result.code}</span>\n` + JSON.stringify(result.body, null, 2);
+  renderBoard();
+});
+
+renderBoard();
+</script>
+</body>
+</html>

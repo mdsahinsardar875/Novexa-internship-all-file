@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rollcall - Photo Proofing Made Simple</title>
+  <meta name="description" content="Send your photo shoot, get client picks back. No spreadsheets, no confusion." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- floating blobs for background decoration -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <header class="navbar" id="top">
+    <div class="navbar-inner">
+      <a href="#top" class="logo">
+        <span class="logo-dot"></span>
+        Rollcall
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav-buttons">
+        <a href="#login" class="btn-text">Log in</a>
+        <a href="#signup" class="btn btn-primary">Get started free</a>
+      </div>
+
+      <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <span class="pill">📸 Built for photographers, by people who get it</span>
+        <h1>Your clients pick.<br>You edit. Done.</h1>
+        <p>
+          Rollcall turns messy email threads and screenshot feedback into a simple,
+          shareable gallery your clients actually enjoy using. Upload a shoot,
+          send the link, get your picks back.
+        </p>
+        <div class="hero-buttons">
+          <a href="#signup" class="btn btn-primary btn-big">Try it free</a>
+          <a href="#demo" class="btn btn-outline btn-big">See how it works</a>
+        </div>
+        <p class="hero-note">✨ No credit card needed &nbsp;·&nbsp; 3 free shoots to start</p>
+      </div>
+
+      <div class="hero-visual" id="demo">
+        <div class="gallery-card">
+          <div class="gallery-header">
+            <span>🎉 Sarah &amp; Tom's Wedding</span>
+            <span class="badge">12 picks</span>
+          </div>
+          <div class="gallery-grid" id="galleryGrid"><!-- filled by script.js --></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOGOS -->
+    <section class="logos">
+      <p>Studios who trust Rollcall with their shoots</p>
+      <div class="logos-row">
+        <span>Golden Hour Studio</span>
+        <span>Bloom &amp; Frame</span>
+        <span>Lightbox Collective</span>
+        <span>Wildflower Weddings</span>
+        <span>Studio Nine</span>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+      <div class="section-title">
+        <span class="tag">Why photographers switch</span>
+        <h2>Everything clicks into place</h2>
+        <p>Every feature exists because a real photographer got annoyed at something and asked us to fix it.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card card-purple">
+          <div class="feature-emoji">🖼️</div>
+          <h3>Instant galleries</h3>
+          <p>Drag, drop, done. Your shoot becomes a beautiful gallery in minutes, not hours.</p>
+        </div>
+        <div class="feature-card card-pink">
+          <div class="feature-emoji">❤️</div>
+          <h3>One-tap favorites</h3>
+          <p>Clients tap a heart to pick their favorites. No app, no login, no confusion.</p>
+        </div>
+        <div class="feature-card card-orange">
+          <div class="feature-emoji">🔍</div>
+          <h3>Side-by-side compare</h3>
+          <p>Two almost-identical shots? Line them up and let the client decide in seconds.</p>
+        </div>
+        <div class="feature-card card-teal">
+          <div class="feature-emoji">⚡</div>
+          <h3>Export in one click</h3>
+          <p>Pull the picks straight into Lightroom, or grab a simple list. Your call.</p>
+        </div>
+        <div class="feature-card card-purple">
+          <div class="feature-emoji">💌</div>
+          <h3>Client-ready links</h3>
+          <p>Send a clean, branded link — not a password-protected zip file nobody opens.</p>
+        </div>
+        <div class="feature-card card-pink">
+          <div class="feature-emoji">📂</div>
+          <h3>Everything in one place</h3>
+          <p>Every shoot you've ever sent, searchable, in one dashboard.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how" id="how">
+      <div class="section-title">
+        <span class="tag">Simple by design</span>
+        <h2>Three steps. That's genuinely it.</h2>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num num-purple">1</div>
+          <h3>Upload your shoot</h3>
+          <p>Drop your photos in — Rollcall builds the gallery automatically, in order.</p>
+        </div>
+        <div class="step">
+          <div class="step-num num-pink">2</div>
+          <h3>Share the link</h3>
+          <p>Your client opens it, no sign-up required, and starts picking favorites right away.</p>
+        </div>
+        <div class="step">
+          <div class="step-num num-orange">3</div>
+          <h3>Get your picks</h3>
+          <p>Their selections land back in your dashboard, ready to edit or export.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="testimonial">
+      <div class="testimonial-card">
+        <p class="quote">"I used to get client feedback as screenshots with red circles drawn on them. Now they just tap a heart. I didn't know how much time this was saving me until I got it back."</p>
+        <p class="quote-author">— Priya Nair, Golden Hour Studio</p>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing" id="pricing">
+      <div class="section-title">
+        <span class="tag">Simple pricing</span>
+        <h2>Pay for shoots, not seats</h2>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>Starter</h3>
+          <p class="price">Free</p>
+          <p class="price-sub">Perfect for trying things out</p>
+          <ul>
+            <li>3 active galleries</li>
+            <li>Client favorites &amp; notes</li>
+            <li>Basic export</li>
+          </ul>
+          <a href="#signup" class="btn btn-outline btn-full">Start free</a>
+        </div>
+
+        <div class="price-card price-featured">
+          <span class="price-tag">🔥 Most popular</span>
+          <h3>Studio</h3>
+          <p class="price">$24<span>/mo</span></p>
+          <p class="price-sub">For working photographers</p>
+          <ul>
+            <li>Unlimited galleries</li>
+            <li>Branded client links</li>
+            <li>Lightroom export</li>
+            <li>Full shoot history</li>
+          </ul>
+          <a href="#signup" class="btn btn-primary btn-full">Get started</a>
+        </div>
+
+        <div class="price-card">
+          <h3>Team</h3>
+          <p class="price">$79<span>/mo</span></p>
+          <p class="price-sub">For studios with multiple shooters</p>
+          <ul>
+            <li>Everything in Studio</li>
+            <li>Multiple team members</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#signup" class="btn btn-outline btn-full">Talk to us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+      <div class="section-title">
+        <span class="tag">Good questions</span>
+        <h2>Things people usually ask</h2>
+      </div>
+
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <button class="faq-q">
+            Do my clients need to download an app or create an account?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><p>Nope. They click the link you send, and they can start picking favorites right away — nothing to install or sign up for.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            Does Rollcall work for digital shoots, or just film?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><p>Both! Upload RAW files, JPEGs, or scans — it works the same either way.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            Can I export picks straight into Lightroom?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><p>Yes, on the Studio plan and above. Picks export as a ready-to-import Lightroom collection.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            What happens to my photos if I cancel?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a"><p>You can export everything first. We keep your galleries for 30 days after cancellation, just in case.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="cta-final" id="signup">
+      <h2>Ready to make client feedback painless?</h2>
+      <p>Set up your first gallery in under five minutes — no credit card needed.</p>
+      <a href="#top" class="btn btn-white btn-big">Get started free</a>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#top" class="logo">
+          <span class="logo-dot"></span>
+          Rollcall
+        </a>
+        <p>Photo proofing that doesn't get in the way.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Rollcall. Made with care.</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
